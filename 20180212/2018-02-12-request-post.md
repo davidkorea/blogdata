@@ -1,3 +1,9 @@
+---
+layout: post
+title: "Request POST method"
+date: 2018-02-11
+tags: request
+---
 
 > To give a detailed introduction about request.post. we will make the comment fuction to show how request.post works.
 
