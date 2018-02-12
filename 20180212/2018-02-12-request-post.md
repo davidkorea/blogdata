@@ -70,7 +70,9 @@ class CommentForm(forms.Form):
 # 4. Template log_detail.html
 
 Rewirte html page by django template language.
-change the static path before moving on ```{% load static%}```, ```"{% static `css\semantic.css` &}"```.
+
+Using ```{% load static%}```, ```"{% static `css\semantic.css` &}"``` to change the static path before moving on .
+
 
 ```HTML
 <div class="ui comments">
@@ -117,14 +119,14 @@ explanation.
 
 - {{ form.as_p }} means wrap each field of form in a <p></p>
 
-![1]()
-![2]()
+![](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/1.png)
+![2](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/2.png)
 
 - when we try to submit the form, then csrf error occurred.
   {{ csrf_token }} means let the broswer know you are you.
 
-![3]()  
-![4]()  
+![3](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/3.png)  
+![4](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/4.png)  
 
 - Django.form validates error automatically
   Use print(form.error) to have a look at what the error is.
@@ -140,7 +142,7 @@ context = {}
 comment_list = Comment.objects.all()
 ```
 
-![5]()  
+![5](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/5.png)  
 
 - Save the data that we input in the form
 
@@ -155,4 +157,4 @@ if request.method == 'POST':
 +        return redirect(to='detail') # 'name' in urls
 ```
 
-![6]()  
+![6](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/6.png)  
