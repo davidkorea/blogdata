@@ -123,7 +123,7 @@ Using ```{% load static%}```, ```"{% static `css\semantic.css` &}"``` to change 
 
 explanation.
 
-- {{ form.as_p }} means wrap each field of form in a <p></p>
+- {{ form.as_p }} means wrap each field of form in a `<p></p>`
 
 ![](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/1.png)
 ![2](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/2.png)
