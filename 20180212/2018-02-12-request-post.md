@@ -126,12 +126,14 @@ Explanation.
 - {{ form.as_p }} means wrap each field of form in a `<p></p>`
 
 ![1](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/1.png)
+
 ![2](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/2.png)
 
 - when we try to submit the form, then csrf error occurred.
   {{ csrf_token }} means let the broswer know you are you.
 
 ![3](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/3.png)  
+
 ![4](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/4.png)  
 
 - Django.form validates error automatically
@@ -238,11 +240,9 @@ class CommentForm(forms.Form):
 ```
 
 - The key point is that the error field will have a error css of form，
-
-```HTML
-<div class=" {{ field.errors|yesno:'error, '}} field">
-```
-
+    ```<div class=" {{ field.errors|yesno:'error, '}} field">```
   which means if field.errors is yes, then ```<div class=" error field">```,
-
   or it will be ```<div class=" field">```.
+  
+![7](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/7.png)  
+
