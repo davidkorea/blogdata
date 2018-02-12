@@ -125,7 +125,7 @@ Explanation.
 
 - {{ form.as_p }} means wrap each field of form in a `<p></p>`
 
-![](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/1.png)
+![1](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/1.png)
 ![2](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/2.png)
 
 - when we try to submit the form, then csrf error occurred.
@@ -164,3 +164,85 @@ if request.method == 'POST':
 ```
 
 ![6](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/6.png)  
+
+> By Now, comment function can work well.
+
+-----
+
+# 5. Customize django.form ValidationError
+
+## 5.1 form.py
+
+```Python
+from django import forms
+from django.core.exceptions import ValidationError
+
+def words_validator(comment):
+    if len(comment) < 4:
+        raise ValidationError('Not Enough Letters')
+
+def comment_validator(comment):
+    if 'a' in comment:
+        raise ValidationError('Do Not Use the Word!')
+
+class CommentForm(forms.Form):
+    name = forms.CharField(max_length=50)
+    comment = forms.CharField(
+        widget=forms.Textarea(), # change CharField to TextField
+        error_messages={
+            'required': 'why no words?' # pop up error_messages
+        },
+        validators=[words_validator, comment_validator] # Customized error conditions
+)
+```
+
+## 5.2 log_detail.html, customize render form.
+
+```HTML
+<form class="ui form" action="" method="post">
+-      {{ form.as_p }}
+
++ #     {% for field in form %}
++ #        <div class="field">
++ #             {{ field.label }}
++ #             {{ field }}
++ #         </div>
++ #     {% endfor %}
+
+    {% if form.errors %}
+
+        <div class="ui error message">
+            {{ form.errors }}
+        </div>
+        {% for field in form %}
+            <div class=" {{ field.errors|yesno:'error, '}} field">
+                {{ field.label }}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+    {% else %}
+
+        {% for field in form %}
+            <div class="field">
+                {{ field.label }}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+    {% csrf_token %}
+
+    <button type="submit" class="ui blue button" >Click</button>
+```
+
+- The key point is that the error field will have a error css of form，
+
+```HTML
+<div class=" {{ field.errors|yesno:'error, '}} field">
+```
+
+  which means if field.errors is yes, then ```<div class=" error field">```,
+
+  or it will be ```<div class=" field">```.
