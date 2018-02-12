@@ -21,6 +21,7 @@ tags: request
 Create template log_detail.html and define a url for this page in urls.py.
 
 ```Python
+{% raw %}
 from django.conf.urls import url
 from django.contrib import admin
 from webapp.views import default, detail
@@ -30,27 +31,33 @@ urlpatterns = [
     url(r'^default/', default, name='default'),
     url(r'^detail/', detail, name='detail'),
 ]
+{% endraw %}
 ```
 
 # 2. Create comment model / db
 
 ```Python
+{% raw %}
 class Comment(models.Model):
     name = models.CharField(null=True, blank=True,max_length=20)
     comment = models.TextField()
     def __str__(self):
       return self.comment
+{% endraw %}
 ```
 Use the commands to generate/create db.
 
 ```Python
+{% raw %}
 python manage.py makemigrations
 python manage.py migrate
+{% endraw %}
 ```
 
 # 3. views.py
 
 ```Python
+{% raw %}
 from django.shortcuts import render, HttpResponseRedirect, redirect
 from webapp.models import Caselog, Comment
 from webapp.form import CommentForm # This function could define here.
@@ -71,16 +78,19 @@ def detail(request):
     context['comment_list'] = comment_list
     context['form'] = form
     return render(request, 'log_detail.html', context)
+{% endraw %}
 ```
 
 Create form.py
 
 ```Python
+{% raw %}
 from django import forms
 
 class CommentForm(forms.Form):
     name = forms.CharField(max_length=50)
     comment = forms.CharField()
+{% endraw %}
 ```
 
 > models.Model may look same as forms.Form, BUT totally different!!!
@@ -93,6 +103,7 @@ Using ```{% load static%}```, ```"{% static `css\semantic.css` &}"``` to change 
 
 
 ```HTML
+{% raw %}
 <div class="ui comments">
     {% for comment in comment_list %}
         <div class="comment">
@@ -111,9 +122,11 @@ Using ```{% load static%}```, ```"{% static `css\semantic.css` &}"``` to change 
         </div>
     {% endfor %}
 </div>
+{% endraw %}
 ```
 
 ```HTML
+{% raw %}
 <form class="ui form" action="" method="post">
 -    <div class="field">
 -        <label> name</label>
@@ -131,6 +144,7 @@ Using ```{% load static%}```, ```"{% static `css\semantic.css` &}"``` to change 
 
     <button type="submit" class="ui blue button" >Click</button>
 </form>
+{% endraw %}
 ```
 
 Explanation.
@@ -153,6 +167,7 @@ Explanation.
   Although we will make validation conditions by ourself.
 
 ```Python
+{% raw %}
 if request.method == 'POST':
     form = CommentForm(request.POST) #绑定表单，实现数据校验
         print('==='*30)
@@ -160,6 +175,7 @@ if request.method == 'POST':
         print('==='*30)
 context = {}
 comment_list = Comment.objects.all()
+{% endraw %}
 ```
 
 ![5](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/5.png)  
@@ -167,6 +183,7 @@ comment_list = Comment.objects.all()
 - Save the data that we input in the form
 
 ```Python
+{% raw %}
 if request.method == 'POST':
     form = CommentForm(request.POST) #绑定表单，实现数据校验
 +    if form.is_valid():
@@ -175,6 +192,7 @@ if request.method == 'POST':
 +        c = Comment(name = name, comment = comment)
 +        c.save()
 +        return redirect(to='detail') # 'name' in urls
+{% endraw %}
 ```
 
 ![6](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/6.png)  
@@ -188,6 +206,7 @@ if request.method == 'POST':
 ## 5.1 form.py
 
 ```Python
+{% raw %}
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -208,11 +227,13 @@ class CommentForm(forms.Form):
         },
         validators=[words_validator, comment_validator] # Customized error conditions
 )
+{% endraw %}
 ```
 
 ## 5.2 log_detail.html, customize render form.
 
 ```HTML
+{% raw %}
 <form class="ui form" action="" method="post">
 -      {{ form.as_p }}
 
@@ -249,6 +270,7 @@ class CommentForm(forms.Form):
     {% csrf_token %}
 
     <button type="submit" class="ui blue button" >Click</button>
+{% endraw %}
 ```
 
 - The key point is that the error field will have a error css of form，
