@@ -97,9 +97,15 @@ class CommentForm(forms.Form):
 
 # 4. Template log_detail.html
 
-Rewirte html page by django template language.
+> Rewirte html page by django template language.
 
-Using ```{% load static%}```, ```"{% static `css\semantic.css` &}"``` to change the static path before moving on .
+  ```Python
+  {% raw %}
+  {% load static%}
+  "{% static `css\semantic.css` &}"
+  {% endraw %}
+  ```
+  Using the commands above to change the static path before moving on.
 
 
 ```HTML
