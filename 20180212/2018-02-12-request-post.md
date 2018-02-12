@@ -121,7 +121,7 @@ Using ```{% load static%}```, ```"{% static `css\semantic.css` &}"``` to change 
 </form>
 ```
 
-explanation.
+Explanation.
 
 - {{ form.as_p }} means wrap each field of form in a `<p></p>`
 
