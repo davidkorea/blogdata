@@ -18,7 +18,19 @@ tags: request
 
 # 1. Caselog details html page
 
-Create template log_detail.html
+Create template log_detail.html and define a url for this page in urls.py.
+
+```Python
+from django.conf.urls import url
+from django.contrib import admin
+from webapp.views import default, detail
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^default/', default, name='default'),
+    url(r'^detail/', detail, name='detail'),
+]
+```
 
 # 2. Create comment model / db
 
@@ -243,6 +255,5 @@ class CommentForm(forms.Form):
     ```<div class=" {{ field.errors|yesno:'error, '}} field">```
   which means if field.errors is yes, then ```<div class=" error field">```,
   or it will be ```<div class=" field">```.
-  
-![7](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/7.png)  
 
+![7](https://raw.githubusercontent.com/davidkorea/blogdata/master/20180212/image/7.png)  
