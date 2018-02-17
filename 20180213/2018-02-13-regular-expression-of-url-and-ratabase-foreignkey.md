@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Django Url"
+title: "Regular Expression of Url and Batabase ForeignKey"
 date: 2018-02-13
-tags: django
+tags: django regularexpression foreignkey
 ---
 
 # 1. Url
@@ -54,7 +54,7 @@ url(r'^detail/(?P<page_num>\d+)$', detail, name='detail'),
              comment = form.cleaned_data['comment']
              c = Comment(name = name, comment = comment)
              c.save()
-             return redirect(to='detail', page_num=page_num)
++            return redirect(to='detail', page_num=page_num)
      context = {}
      comment_list = Comment.objects.all()
 +    caselog = Caselog.objects.get(id=page_num)
@@ -210,9 +210,9 @@ def detail(request, page_num):
       context['best_comment'] = best_comment[0]
   ... ...
 ```
-  - 'belong_to' needs a db class instance.
-  - 'Caselog.objects.get(id=page_num)' means get a **Caselog** through page_num.
-  - 'Comment.objects.filter()', filter will returna a list.
+  * 'belong_to' needs a db class instance.
+  * 'Caselog.objects.get(id=page_num)' means get a **Caselog** through page_num.
+  * 'Comment.objects.filter()', filter will returna a list.
 
 - template
 
